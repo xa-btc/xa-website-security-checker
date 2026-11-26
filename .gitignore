@@ -1,0 +1,41 @@
+# Only reviewed project files are public. Scan exports can have arbitrary names.
+*
+!/.gitignore
+!/README.md
+!/changelog.txt
+!/Start XA Website Security Checker.cmd
+!/start.py
+
+!/web/
+!/web/index.html
+!/web/app.js
+!/web/style.css
+!/web/favicon.svg
+
+!/tester/
+!/tester/__init__.py
+!/tester/demo.py
+!/tester/exposure.py
+!/tester/instance.py
+!/tester/network.py
+!/tester/reports.py
+!/tester/rules.py
+!/tester/scanner.py
+!/tester/server.py
+!/tester/storage.py
+!/tester/surface.py
+
+!/tests/
+!/tests/test_application.py
+!/tests/test_detection.py
+!/tests/fixtures/
+!/tests/fixtures/README.md
+# Disposable TLS pair for the loopback regression suite.
+!/tests/fixtures/localhost-test-cert.pem
+!/tests/fixtures/localhost-test-key.pem
+
+# Mock-data images embedded in the public README.
+!/screenshots/
+!/screenshots/demo-overview.png
+!/screenshots/demo-findings.png
+!/screenshots/demo-evidence.png

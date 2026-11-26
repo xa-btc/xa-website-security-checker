@@ -1,0 +1,13 @@
+XA Website Tester
+
+1.1.0 - 2026-11-26
+- Expanded the catalog to 44 rules, with stronger CSP, cookie, credential-pattern, form and response handling.
+- Added optional scoped sitemap discovery, observed-host inventory, 15 content-confirmed exposure probes and soft-404 suppression.
+- Added optional selected-host TCP reachability and TLS protocol capability checks, with explicit ownership and evidence limits.
+- Added grouped issue views, occurrence navigation, extended HTML/JSON coverage and detector-revision-aware comparisons.
+- Preserved previous data, triage, defaults and the user-confirmed Python-discovery CMD launcher.
+- Repaired malformed discovered URLs and redirects without aborting the whole scan; removed URL userinfo from evidence; reduced CSP policy-intersection and strict-dynamic false positives.
+- Verified 52 tests with local HTTP, HTTPS, TCP, API, export and compatibility fixtures; browser host unavailable.
+
+1.0.0 - 2026-11-23
+- Initial local website scanner, SQLite scan history, review workflow and standalone reports.

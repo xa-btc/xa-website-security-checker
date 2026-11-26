@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark light">
+  <title>XA Website Security Checker</title>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/style.css">
+  <script src="/app.js" defer></script>
+</head>
+<body>
+  <aside class="sidebar">
+    <a class="brand" href="/" aria-label="XA Website Security Checker home"><img src="/favicon.svg" alt=""><span>XA Website<small>Security Checker</small></span></a>
+    <div class="workspace-label">YOUR WORKSPACE <span class="local-pill">LOCAL</span></div>
+    <label class="sr-only" for="website-select">Selected website</label><select id="website-select"><option>No websites yet</option></select>
+    <nav aria-label="Main navigation">
+      <button class="nav active" data-view="overview"><span class="nav-icon">◈</span>Overview</button>
+      <button class="nav" data-view="findings"><span class="nav-icon">◎</span>Findings<span id="nav-count" class="count">0</span></button>
+      <button class="nav" data-view="history"><span class="nav-icon">↺</span>Scan history</button>
+      <button class="nav" data-view="coverage"><span class="nav-icon">▤</span>Coverage & checks</button>
+      <button class="nav" data-view="settings"><span class="nav-icon">⚙</span>Website settings</button>
+    </nav>
+    <button class="add-site secondary" id="add-site">＋ Add website</button>
+    <div class="sidebar-bottom"><div class="privacy-icon">⌂</div><strong>Your results stay here.</strong><p>Scans run on this computer. No cloud account or API key required.</p><span id="version">LOCAL ENGINE</span></div>
+  </aside>
+  <main>
+    <header class="topbar"><div><span class="breadcrumb">Workspace</span><span class="separator">/</span><span id="view-crumb">Overview</span></div><div class="topbar-actions"><span class="engine-status"><i></i>Local engine connected</span><button id="theme-toggle" class="secondary" type="button" aria-pressed="true">Dark mode</button></div></header>
+    <section class="page-head"><div><div class="eyebrow">WEBSITE SECURITY</div><h1 id="page-title">Know where your website stands.</h1><p id="page-subtitle">Find issues, understand the evidence, and keep track of what changes.</p></div><button class="primary" id="new-scan">＋ New scan</button></section>
+    <div id="connection-error" class="notice error" hidden></div>
+    <section id="empty-state" class="empty-state" hidden><div class="shield-art"><img src="/favicon.svg" alt=""></div><span class="eyebrow">A CLEARER PICTURE STARTS HERE</span><h2>Your first security check is a URL away.</h2><p>Add a website you own to inspect its pages, security headers, cookies, forms, and common exposures. Every finding comes with evidence and a recommended fix.</p><div class="actions"><button class="primary" id="empty-add">Add your website</button><button class="secondary" id="demo-scan">Try a local demo</button></div><div class="empty-features"><span>Bounded, rate-limited scans</span><span>Evidence you can inspect</span><span>Reports you can keep</span></div></section>
+    <div id="project-workspace" hidden>
+      <section id="scan-strip" class="scan-strip"></section>
+      <div id="overview-view" class="view">
+        <div class="metrics"><article><span>Open issue types</span><strong id="metric-open">—</strong><small id="metric-occurrences">Across the selected scan</small></article><article><span>High priority</span><strong id="metric-high">—</strong><small>High and critical occurrences</small></article><article><span>Pages checked</span><strong id="metric-pages">—</strong><small id="metric-requests">No requests yet</small></article><article><span>New since baseline</span><strong id="metric-new">—</strong><small id="metric-baseline">Run a second matching scan</small></article></div>
+        <div class="overview-grid"><section class="panel priority-panel"><div class="section-heading"><div><h2>Your next fixes</h2><p>Start with the findings that need the most attention.</p></div><button class="text-button" id="all-findings">View all findings</button></div><div id="priority-list"></div></section><section class="panel severity-panel"><h2>Finding breakdown</h2><p>Severity indicates review priority.</p><div id="severity-bars"></div><div class="subtle-note">An automated scan is a starting point. Review evidence and coverage before deciding what to fix.</div></section></div>
+        <section class="panel scope-summary"><div class="scope-symbol">⌁</div><div><h2>A focused look at your website</h2><p>Checks cover HTTP responses and HTML within your scan scope. Optional discovery, service inventory and TLS capability checks extend coverage. JavaScript interaction, exploit validation, and source-code analysis are outside this engine’s coverage.</p></div><button class="secondary" id="view-coverage">See coverage</button></section>
+      </div>
+      <div id="findings-view" class="view" hidden><section class="panel"><div class="section-heading"><div><h2>Findings</h2><p>Inspect the evidence, add a note, and track your review.</p></div><div class="export-actions"><button class="secondary export" data-format="html">HTML report</button><button class="secondary export" data-format="json">JSON</button><button class="secondary export" data-format="csv">CSV</button></div></div><div class="filters"><input type="search" id="finding-search" placeholder="Search findings, URLs, or evidence…" aria-label="Search findings"><select id="severity-filter" aria-label="Filter severity"><option value="">All severities</option><option>high</option><option>medium</option><option>low</option><option>info</option></select><select id="status-filter" aria-label="Filter status"><option value="">All statuses</option><option value="open">Open</option><option value="reviewing">Reviewing</option><option value="accepted">Accepted risk</option></select></div><label class="checkbox"><input type="checkbox" id="group-findings" checked>Group repeated findings by issue type</label><div id="finding-table" class="table-wrap"></div></section></div>
+      <div id="history-view" class="view" hidden><section class="panel"><div class="section-heading"><div><h2>Scan history</h2><p>Every run is retained locally, including interrupted and partial scans.</p></div></div><div id="history-table" class="table-wrap"></div></section></div>
+      <div id="coverage-view" class="view" hidden><section class="panel"><h2>What this scan covered</h2><div id="coverage-content"></div><div id="surface-content"></div></section><section class="panel"><h2>Pages observed</h2><div id="pages-table" class="table-wrap"></div></section><section class="panel"><h2>Check catalog</h2><p>“Evaluated” means a rule ran for at least one applicable response. It does not mean every page passed.</p><div id="rule-table" class="table-wrap"></div></section></div>
+      <div id="settings-view" class="view" hidden><section class="panel settings-panel"><h2>Website settings</h2><p>Settings apply to the next scan. Existing reports retain their original scope.</p><form id="settings-form"></form></section></div>
+    </div>
+    <footer>XA Website Security Checker <span>Local assessments. Actionable evidence.</span></footer>
+  </main>
+  <dialog id="website-dialog"><form id="website-form"><div class="dialog-heading"><div><div class="eyebrow">YOUR NEXT TARGET</div><h2>Add a website</h2></div><button type="button" class="icon-button close-dialog" aria-label="Close">×</button></div><p>Choose a website you own or have permission to test.</p><label>Website name<input name="name" required maxlength="100" placeholder="My website"></label><label>Website URL<input name="url" required type="url" placeholder="https://example.com"></label><label class="checkbox"><input name="allow_private" type="checkbox">Allow localhost and private network targets</label><p class="hint">Start with a baseline scan. You can configure page limits, exclusions, authentication, and optional exposure checks afterward.</p><p class="form-error" role="alert"></p><div class="dialog-actions"><button type="button" class="secondary close-dialog">Cancel</button><button class="primary" type="submit">Add website</button></div></form></dialog>
+  <dialog id="scan-dialog"><form id="scan-form"><div class="dialog-heading"><div><div class="eyebrow">NEW ASSESSMENT</div><h2>Start a scan</h2></div><button type="button" class="icon-button close-dialog" aria-label="Close">×</button></div><p id="scan-target"></p><div id="scan-config" class="config-preview"></div><details><summary>Authentication (optional)</summary><p class="hint">Used for this scan only, on the exact HTTPS origin with certificate verification. Enter the full header value. Login success is not automatically verified.</p><label>Authorization header<input name="authorization" type="password" autocomplete="off" placeholder="Bearer …"></label><label>Cookie header<input name="cookie" type="password" autocomplete="off" placeholder="session=…"></label></details><p class="hint">Requests use GET only. Exclude logout, purchase, or other application-specific URLs with side effects in Website settings.</p><p class="form-error" role="alert"></p><div class="dialog-actions"><button type="button" class="secondary close-dialog">Cancel</button><button class="primary" type="submit">Start scan</button></div></form></dialog>
+  <dialog id="finding-dialog" class="finding-dialog"><div class="dialog-heading"><span class="eyebrow">FINDING DETAILS</span><button class="icon-button close-dialog" aria-label="Close">×</button></div><div id="finding-detail"></div></dialog>
+  <div id="toast" role="status" hidden></div>
+</body>
+</html>
