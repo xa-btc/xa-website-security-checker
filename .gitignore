@@ -1,6 +1,7 @@
 # Only reviewed project files are public. Scan exports can have arbitrary names.
 *
 !/.gitignore
+!/LICENSE
 !/README.md
 !/changelog.txt
 !/Start XA Website Security Checker.cmd
